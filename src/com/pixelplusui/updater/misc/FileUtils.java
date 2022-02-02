@@ -15,7 +15,6 @@
  */
 package com.pixelplusui.updater.misc;
 
-import android.annotation.NonNull;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
@@ -24,6 +23,8 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+
+import androidx.annotation.NonNull;
 import androidx.documentfile.provider.DocumentFile;
 import android.util.Log;
 
