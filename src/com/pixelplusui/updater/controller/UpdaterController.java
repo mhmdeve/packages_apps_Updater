@@ -327,9 +327,9 @@ public class UpdaterController {
         Log.d(TAG, "Adding download: " + updateInfo.getDownloadId());
         if(updateInfo.getPersistentStatus() == UpdateStatus.Persistent.LOCAL){
             for (DownloadEntry entry : mDownloads.values()) {
-                if(entry.mUpdate.getFile().getPath().equals(updateInfo.getFile().getPath())){
-                    return false;
-                }
+//                if(entry.mUpdate.getFile().getPath().equals(updateInfo.getFile().getPath())){
+//                    return false;
+//                }
             }
         }
         if (mDownloads.containsKey(updateInfo.getDownloadId())) {
