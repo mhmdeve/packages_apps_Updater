@@ -33,15 +33,6 @@ public class PermissionsUtils {
         return permissionState == PackageManager.PERMISSION_GRANTED;
     }
 
-    private static boolean hasManageStoragePermission(Context context) {
-        if (Environment.isExternalStorageManager())
-            return true;
-
-        Intent intent = new Intent().setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-        context.startActivity(intent);
-        return false;
-    }
-
     /**
      * Check the given permissions and requests them if needed.
      *
@@ -51,10 +42,10 @@ public class PermissionsUtils {
      * @return true if the permission is granted, false otherwise
      */
     public static boolean checkAndRequestPermissions(final Activity activity,
-            final String[] permissions, final int requestCode) {
+                                                     final String[] permissions, final int requestCode) {
         List<String> permissionsList = new ArrayList<>();
         for (String permission : permissions) {
-            if (!hasPermission(activity, permission) || !hasManageStoragePermission(activity)) {
+            if (!hasPermission(activity, permission)) {
                 permissionsList.add(permission);
             }
         }
@@ -69,14 +60,13 @@ public class PermissionsUtils {
     }
 
     /**
-     * Check and request the manage external storage permission
-     * To save OTA packages inside root of internal storage
+     * Check and request the write external storage permission
      *
      * @see #checkAndRequestPermissions(Activity, String[], int)
      */
     public static boolean checkAndRequestStoragePermission(Activity activity, int requestCode) {
         return checkAndRequestPermissions(activity,
-                new String[]{Manifest.permission.MANAGE_EXTERNAL_STORAGE},
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 requestCode);
     }
 }

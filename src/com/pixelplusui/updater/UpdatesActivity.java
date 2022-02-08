@@ -15,6 +15,7 @@
  */
 package com.pixelplusui.updater;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.UiModeManager;
@@ -67,6 +68,7 @@ import com.pixelplusui.updater.download.DownloadClient;
 import com.pixelplusui.updater.misc.BuildInfoUtils;
 import com.pixelplusui.updater.misc.Constants;
 import com.pixelplusui.updater.misc.FileUtils;
+import com.pixelplusui.updater.misc.PermissionsUtils;
 import com.pixelplusui.updater.misc.StringGenerator;
 import com.pixelplusui.updater.misc.Utils;
 import com.pixelplusui.updater.model.Update;
@@ -94,6 +96,11 @@ public class UpdatesActivity extends UpdatesListActivity {
     private boolean mIsTV;
 
     private static final int READ_REQUEST_CODE = 42;
+    private static final int STORAGE_PERMISSIONS_REQUEST_CODE = 0;
+    private static final String[] REQUIRED_STORAGE_PERMISSIONS = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,7 +245,12 @@ public class UpdatesActivity extends UpdatesListActivity {
                 return true;
             }
             case R.id.menu_local_update: {
-                performFileSearch();
+                boolean hasPermission = PermissionsUtils.checkAndRequestPermissions(
+                        this, REQUIRED_STORAGE_PERMISSIONS,
+                        STORAGE_PERMISSIONS_REQUEST_CODE);
+                if (hasPermission) {
+                    performFileSearch();
+                }
                 return true;
             }
         }
